@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: movie-rating-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: TMDB_API_KEY
+        sync: false
+      - key: PORT
+        value: 10000
+
+  - type: web
+    name: movie-rating-frontend
+    env: node
+    plan: free
+    buildCommand: cd frontend && npm install
+    startCommand: cd frontend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: movie-rating-backend
+          property: host
+      - key: PORT
+        value: 3000

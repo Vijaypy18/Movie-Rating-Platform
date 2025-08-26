@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Review Website</title>
+    <!-- Font Awesome for Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-900 text-white">
+    <!-- Header Section -->
+    <header class="bg-gray-800 p-5 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-3xl font-bold">🎬 Movie Review Hub</h1>
+        <nav class="space-x-6">
+          <a href="index.html" class="hover:text-purple-400">Home</a>
+          <a href="profile.html" class="hover:text-purple-400">Profile</a>
+          <a href="movies.html" class="hover:text-purple-400">Movies</a>
+          <a href="watchlist.html" class="hover:text-purple-400">Watchlist</a>
+          <a href="favorites.html" class="hover:text-purple-400">Favorites</a>
+          <span id="auth-btn-container">
+            <button
+              id="open-auth-modal"
+              class="bg-purple-600 px-4 py-2 rounded"
+            >
+              Login/Register
+            </button>
+          </span>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="container mx-auto mt-10 p-5">
+      <h2 class="text-4xl font-semibold mb-5 text-center">
+        Welcome to the Movie Review Hub
+      </h2>
+      <p class="text-lg text-gray-400 text-center mb-10">
+        Discover, rate, and organize your favorite movies effortlessly!
+      </p>
+      <div class="text-center">
+        <button
+          id="open-auth-modal-2"
+          class="bg-green-600 px-6 py-2 rounded hover:bg-green-500"
+        >
+          Start Now
+        </button>
+      </div>
+    </main>
+
+    <!-- Auth Modal -->
+    <div
+      id="auth-modal"
+      class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    >
+      <div class="bg-gray-800 p-8 rounded-lg w-96">
+        <!-- Login Form -->
+        <div id="login-form">
+          <h2 class="text-2xl mb-4 font-bold text-center">Login</h2>
+          <input
+            type="email"
+            id="login-email"
+            placeholder="Email"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          <input
+            type="password"
+            id="login-password"
+            placeholder="Password"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          <div class="flex items-center mb-4">
+            <input type="checkbox" id="remember-me" class="mr-2" />
+            <label for="remember-me" class="text-sm">Remember Me</label>
+          </div>
+          <button id="submit-login" class="bg-purple-600 w-full py-2 rounded">
+            Login
+          </button>
+          <p class="text-sm mt-4 text-center">
+            Forgot your password?
+            <a href="#" id="forgot-password" class="text-blue-400"
+              >Reset here</a
+            >
+          </p>
+          <p class="text-sm mt-4 text-center">
+            Don't have an account?
+            <a href="#" id="switch-to-register" class="text-blue-400"
+              >Register here</a
+            >
+          </p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="hidden">
+          <h2 class="text-2xl mb-4 font-bold text-center">Register</h2>
+          <input
+            type="text"
+            id="register-username"
+            placeholder="Username"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          <input
+            type="email"
+            id="register-email"
+            placeholder="Email"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          <input
+            type="password"
+            id="register-password"
+            placeholder="Password (min 8 characters)"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          
+          <!-- Security Question -->
+          <select id="register-security-question" class="w-full p-2 mb-4 bg-gray-700 rounded text-white">
+            <option value="">Choose a security question</option>
+            <option value="What is your favorite animal?">What is your favorite animal?</option>
+            <option value="What is your favorite flower?">What is your favorite flower?</option>
+            <option value="What is your favorite city?">What is your favorite city?</option>
+            <option value="What is your favorite food?">What is your favorite food?</option>
+            <option value="What is your favorite color?">What is your favorite color?</option>
+            <option value="What is your favorite movie?">What is your favorite movie?</option>
+            <option value="What is your favorite book?">What is your favorite book?</option>
+            <option value="What is your favorite sport?">What is your favorite sport?</option>
+          </select>
+          <input
+            type="text"
+            id="register-security-answer"
+            placeholder="Your answer"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          
+          <button id="submit-register" class="bg-green-600 w-full py-2 rounded">
+            Register
+          </button>
+          <p class="text-sm mt-4 text-center">
+            Already have an account?
+            <a href="#" id="switch-to-login" class="text-blue-400"
+              >Login here</a
+            >
+          </p>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div id="forgot-password-form" class="hidden">
+          <h2 class="text-2xl mb-4 font-bold text-center">Reset Password</h2>
+          <input
+            type="email"
+            id="forgot-email"
+            placeholder="Enter your email"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          
+          <!-- Security Question -->
+          <select id="forgot-security-question" class="w-full p-2 mb-4 bg-gray-700 rounded text-white">
+            <option value="">Choose your security question</option>
+            <option value="What is your favorite animal?">What is your favorite animal?</option>
+            <option value="What is your favorite flower?">What is your favorite flower?</option>
+            <option value="What is your favorite city?">What is your favorite city?</option>
+            <option value="What is your favorite food?">What is your favorite food?</option>
+            <option value="What is your favorite color?">What is your favorite color?</option>
+            <option value="What is your favorite movie?">What is your favorite movie?</option>
+            <option value="What is your favorite book?">What is your favorite book?</option>
+            <option value="What is your favorite sport?">What is your favorite sport?</option>
+          </select>
+          <input
+            type="text"
+            id="forgot-security-answer"
+            placeholder="Your answer"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          
+          <button id="submit-forgot-password" class="bg-blue-600 w-full py-2 rounded mb-2">
+            Verify & Continue
+          </button>
+          <button id="back-to-login" class="bg-gray-600 w-full py-2 rounded">
+            Back to Login
+          </button>
+        </div>
+
+        <!-- New Password Form -->
+        <div id="new-password-form" class="hidden">
+          <h2 class="text-2xl mb-4 font-bold text-center">Set New Password</h2>
+          <input
+            type="password"
+            id="new-password"
+            placeholder="New Password (min 8 characters)"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          <input
+            type="password"
+            id="confirm-new-password"
+            placeholder="Confirm New Password"
+            class="w-full p-2 mb-4 bg-gray-700 rounded"
+          />
+          
+          <button id="submit-new-password" class="bg-green-600 w-full py-2 rounded mb-2">
+            Reset Password
+          </button>
+          <button id="cancel-reset" class="bg-gray-600 w-full py-2 rounded">
+            Cancel
+          </button>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="hidden text-center mt-4">
+          <i class="fas fa-spinner fa-spin text-xl"></i>
+          <p>Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Axios for API Requests -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- External JS -->
+    <script src="index.js"></script>
+
+    <!-- Auth Modal JS -->
+    <script>
+      // Redirect if already logged in
+      window.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          window.location.href = "profile.html"; // Redirect to profile if token exists
+        }
+      });
+
+      // Show/Hide Auth Modal
+      const authModal = document.getElementById("auth-modal");
+
+      // Open modal from top-right Login/Register button
+      document
+        .getElementById("open-auth-modal")
+        .addEventListener("click", () => {
+          authModal.classList.remove("hidden");
+        });
+
+      // Open modal from "Start Now" button
+      document
+        .getElementById("open-auth-modal-2")
+        .addEventListener("click", () => {
+          authModal.classList.remove("hidden");
+        });
+
+      // Close Modal when clicking outside the modal popup
+      authModal.addEventListener("click", (event) => {
+        if (event.target === authModal) {
+          authModal.classList.add("hidden");
+        }
+      });
+
+      // Prevent clicks inside the modal from closing it
+      document
+        .querySelector(".bg-gray-800")
+        .addEventListener("click", (event) => {
+          event.stopPropagation();
+        });
+
+      // Switch between Login and Register
+      document
+        .getElementById("switch-to-register")
+        .addEventListener("click", () => {
+          document.getElementById("login-form").classList.add("hidden");
+          document.getElementById("register-form").classList.remove("hidden");
+        });
+
+      document
+        .getElementById("switch-to-login")
+        .addEventListener("click", () => {
+          document.getElementById("register-form").classList.add("hidden");
+          document.getElementById("login-form").classList.remove("hidden");
+        });
+
+      // Old forgot password functionality removed - now handled below
+
+      // Loading Spinner Helper Functions
+      function showSpinner() {
+        document.getElementById("loading-spinner").classList.remove("hidden");
+      }
+
+      function hideSpinner() {
+        document.getElementById("loading-spinner").classList.add("hidden");
+      }
+
+      // Update UI on Login/Register
+      function updateUserUI(user) {
+        const nav = document.querySelector("nav");
+
+        // Replace Login/Register button with user info and Logout
+        nav.innerHTML = `
+                <a href="index.html" class="hover:text-purple-400">Home</a>
+                <a href="profile.html" class="hover:text-purple-400">Profile</a>
+                <a href="movies.html" class="hover:text-purple-400">Movies</a>
+                <a href="watchlist.html" class="hover:text-purple-400">Watchlist</a>
+                <a href="favorites.html" class="hover:text-purple-400">Favorites</a>
+                <span class="text-green-400">Welcome, ${user.username}!</span>
+                <button id="logout-button" class="bg-red-600 px-4 py-2 rounded">Logout</button>
+            `;
+
+        // Add Logout functionality
+        document
+          .getElementById("logout-button")
+          .addEventListener("click", () => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            alert("You have logged out.");
+            location.reload(); // Refresh the page to reset the UI
+          });
+      }
+
+      // Login Functionality
+      document
+        .getElementById("submit-login")
+        .addEventListener("click", async () => {
+          const email = document.getElementById("login-email").value;
+          const password = document.getElementById("login-password").value;
+
+          if (!email || !password) {
+            alert("Please enter both email and password.");
+            return;
+          }
+
+          showSpinner();
+
+          try {
+            const response = await axios.post(
+              "http://localhost:5001/api/auth/login",
+              { email, password }
+            );
+            const { token, user } = response.data;
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+
+            alert("Login successful!");
+            authModal.classList.add("hidden");
+
+            // Update UI with logged-in user info
+            updateUserUI(user);
+
+            // Redirect to profile page
+            window.location.href = "profile.html";
+          } catch (error) {
+            alert(error.response?.data?.message || "Login failed!");
+          } finally {
+            hideSpinner();
+          }
+        });
+
+      // Register Functionality
+      document
+        .getElementById("submit-register")
+        .addEventListener("click", async () => {
+          const username = document.getElementById("register-username").value;
+          const email = document.getElementById("register-email").value;
+          const password = document.getElementById("register-password").value;
+          const securityQuestion = document.getElementById("register-security-question").value;
+          const securityAnswer = document.getElementById("register-security-answer").value;
+
+          if (!username || !email || !password || !securityQuestion || !securityAnswer) {
+            alert("Please fill in all fields including security question and answer.");
+            return;
+          }
+
+          if (password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+          }
+
+          showSpinner();
+
+          try {
+            const response = await axios.post(
+              "http://localhost:5001/api/auth/register",
+              { username, email, password, securityQuestion, securityAnswer }
+            );
+            alert("Registration successful!");
+
+            document.getElementById("register-form").classList.add("hidden");
+            document.getElementById("login-form").classList.remove("hidden");
+          } catch (error) {
+            alert(error.response?.data?.message || "Registration failed!");
+          } finally {
+            hideSpinner();
+          }
+        });
+
+        // Forgot Password Functionality
+        let resetToken = '';
+        
+        document.getElementById("forgot-password").addEventListener("click", () => {
+          document.getElementById("login-form").classList.add("hidden");
+          document.getElementById("forgot-password-form").classList.remove("hidden");
+        });
+
+        document.getElementById("back-to-login").addEventListener("click", () => {
+          document.getElementById("forgot-password-form").classList.add("hidden");
+          document.getElementById("login-form").classList.remove("hidden");
+        });
+
+        document.getElementById("submit-forgot-password").addEventListener("click", async () => {
+          const email = document.getElementById("forgot-email").value;
+          const securityQuestion = document.getElementById("forgot-security-question").value;
+          const securityAnswer = document.getElementById("forgot-security-answer").value;
+
+          if (!email || !securityQuestion || !securityAnswer) {
+            alert("Please fill in all fields.");
+            return;
+          }
+
+          showSpinner();
+
+          try {
+            const response = await axios.post("http://localhost:5001/api/auth/forgot-password", {
+              email, securityQuestion, securityAnswer
+            });
+            
+            resetToken = response.data.resetToken;
+            alert("Security verification successful! Now set your new password.");
+            
+            document.getElementById("forgot-password-form").classList.add("hidden");
+            document.getElementById("new-password-form").classList.remove("hidden");
+          } catch (error) {
+            alert(error.response?.data?.message || "Verification failed!");
+          } finally {
+            hideSpinner();
+          }
+        });
+
+        document.getElementById("submit-new-password").addEventListener("click", async () => {
+          const newPassword = document.getElementById("new-password").value;
+          const confirmPassword = document.getElementById("confirm-new-password").value;
+
+          if (!newPassword || !confirmPassword) {
+            alert("Please fill in both password fields.");
+            return;
+          }
+
+          if (newPassword.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+          }
+
+          if (newPassword !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+          }
+
+          showSpinner();
+
+          try {
+            await axios.post("http://localhost:5001/api/auth/reset-password", {
+              resetToken, newPassword
+            });
+            
+            alert("Password reset successfully! You can now login with your new password.");
+            
+            // Clear forms and go back to login
+            document.getElementById("new-password-form").classList.add("hidden");
+            document.getElementById("login-form").classList.remove("hidden");
+            document.getElementById("new-password").value = '';
+            document.getElementById("confirm-new-password").value = '';
+            resetToken = '';
+          } catch (error) {
+            alert(error.response?.data?.message || "Password reset failed!");
+          } finally {
+            hideSpinner();
+          }
+        });
+
+        document.getElementById("cancel-reset").addEventListener("click", () => {
+          document.getElementById("new-password-form").classList.add("hidden");
+          document.getElementById("login-form").classList.remove("hidden");
+          document.getElementById("new-password").value = '';
+          document.getElementById("confirm-new-password").value = '';
+          resetToken = '';
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "movie-rating-frontend",
+  "version": "1.0.0",
+  "description": "Movie Rating Website Frontend",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Frontend build complete'"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "keywords": ["movie", "rating", "frontend"],
+  "author": "",
+  "license": "ISC"
+}

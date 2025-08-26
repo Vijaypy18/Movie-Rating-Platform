@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies - Movie Review Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .movie-card:hover .movie-poster {
+            transform: scale(1.05);
+        }
+        
+        .movie-card {
+            transition: all 0.3s ease;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Header Section -->
+    <header class="bg-gray-800 p-5 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">🎬 Movie Review Hub</h1>
+            <nav class="space-x-6">
+                <a href="index.html" class="hover:text-purple-400">Home</a>
+                <a href="profile.html" class="hover:text-purple-400">Profile</a>
+                <a href="movies.html" class="hover:text-purple-400">Movies</a>
+                <a href="watchlist.html" class="hover:text-purple-400">Watchlist</a>
+                <a href="favorites.html" class="hover:text-purple-400">Favorites</a>
+                <!-- Updated login/register button -->
+                <button id="auth-toggle" class="bg-purple-600 px-4 py-2 rounded hover:bg-purple-700">Login/Register</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-gray-800 p-8 rounded-lg w-96">
+            <!-- Login Form -->
+            <div id="login-form">
+                <h2 class="text-2xl mb-4 font-bold text-center">Login</h2>
+                <input type="email" id="login-email" placeholder="Email" class="w-full p-2 mb-4 bg-gray-700 rounded">
+                <input type="password" id="login-password" placeholder="Password" class="w-full p-2 mb-4 bg-gray-700 rounded">
+                <button id="submit-login" class="bg-purple-600 w-full py-2 rounded hover:bg-purple-700">Login</button>
+                <p class="text-sm mt-4 text-center">
+                    Don't have an account? <a href="#" id="switch-to-register" class="text-blue-400">Register here</a>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="hidden">
+                <h2 class="text-2xl mb-4 font-bold text-center">Register</h2>
+                <input type="text" id="register-username" placeholder="Username" class="w-full p-2 mb-4 bg-gray-700 rounded">
+                <input type="email" id="register-email" placeholder="Email" class="w-full p-2 mb-4 bg-gray-700 rounded">
+                <input type="password" id="register-password" placeholder="Password" class="w-full p-2 mb-4 bg-gray-700 rounded">
+                <button id="submit-register" class="bg-green-600 w-full py-2 rounded hover:bg-green-700">Register</button>
+                <p class="text-sm mt-4 text-center">
+                    Already have an account? <a href="#" id="switch-to-login" class="text-blue-400">Login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Section -->
+    <main class="container mx-auto mt-10 p-5">
+        <section id="movie-search">
+            <h2 class="text-4xl font-semibold mb-5 text-center">Discover Movies</h2>
+
+            <!-- Search Section with Suggestions -->
+            <div class="flex flex-col items-center mb-8">
+                <div class="w-full max-w-2xl relative">
+                    <!-- Search Input and Button -->
+                    <div class="flex justify-center items-center space-x-4 mb-6">
+                        <input type="text" 
+                               id="search-input" 
+                               placeholder="Search for a movie..." 
+                               class="p-2 w-full rounded bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500">
+                        <button id="search-btn" 
+                                class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full shadow-md transition duration-300">
+                            <i class="fas fa-search mr-2"></i>Search
+                        </button>
+                    </div>
+                    
+                    <!-- Suggestions Container (Hidden by default) -->
+                    <div id="suggestions-container" 
+                         class="hidden absolute z-50 w-full bg-gray-800 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+                        <!-- Suggestions will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movies Grid -->
+            <div id="movies-container" 
+                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Movie cards will be dynamically inserted here -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center mt-8 space-x-4">
+                <button id="prev-page" 
+                        class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full disabled:opacity-50 transition duration-300">
+                    <i class="fas fa-chevron-left mr-2"></i>Previous
+                </button>
+                <button id="next-page" 
+                        class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full disabled:opacity-50 transition duration-300">
+                    Next<i class="fas fa-chevron-right ml-2"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 p-4 text-center mt-10">
+        <p>&copy; 2024 Movie Review Hub</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="movies.js"></script>
+</body>
+</html>

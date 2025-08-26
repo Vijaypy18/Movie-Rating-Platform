@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watchlist - Movie Review Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .movie-card {
+            transition: all 0.3s ease;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white">
+    <!-- Header Section -->
+    <header class="bg-gray-800 p-5 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">🎬 Movie Review Hub</h1>
+            <nav class="space-x-6">
+                <a href="index.html" class="hover:text-purple-400">Home</a>
+                <a href="profile.html" class="hover:text-purple-400">Profile</a>
+                <a href="movies.html" class="hover:text-purple-400">Movies</a>
+                <a href="watchlist.html" class="hover:text-purple-400">Watchlist</a>
+                <a href="favorites.html" class="hover:text-purple-400">Favorites</a>
+                <button id="auth-btn" class="bg-purple-600 px-4 py-2 rounded">Login/Register</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Tab Navigation -->
+        <div class="flex justify-center mb-8">
+            <div class="bg-gray-800 rounded-lg p-1">
+                <button id="my-watchlist-tab" 
+                        class="px-6 py-2 rounded-md bg-purple-600 text-white transition-colors">
+                    My Watchlists
+                </button>
+                <button id="friends-tab" 
+                        class="px-6 py-2 rounded-md text-gray-300 hover:text-white transition-colors">
+                    Friends
+                </button>
+                <button id="search-users-tab" 
+                        class="px-6 py-2 rounded-md text-gray-300 hover:text-white transition-colors">
+                    Find Friends
+                </button>
+            </div>
+        </div>
+
+        <!-- My Watchlists Section -->
+        <section id="my-watchlists" class="container mx-auto px-4">
+            <h2 class="text-4xl font-semibold mb-8 text-center">Your Watchlists</h2>
+            <div class="flex justify-center space-x-4 mb-8">
+                <button id="public-btn"
+                    onclick="toggleWatchlistView('public')" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition duration-200"
+                >
+                    <i class="fas fa-globe mr-2"></i>Public Watchlist
+                </button>
+                <button id="private-btn"
+                    onclick="toggleWatchlistView('private')" 
+                    class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg transition duration-200"
+                >
+                    <i class="fas fa-lock mr-2"></i>Private Watchlist
+                </button>
+            </div>
+            <div id="empty-message" class="text-center text-lg text-gray-400 hidden mb-8">
+                Your watchlist is empty. Start adding movies from the movies page!
+            </div>
+            <div id="watchlist-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Movies will be rendered here -->
+            </div>
+        </section>
+
+        <!-- Friends Section -->
+        <section id="friends-section" class="container mx-auto px-4 hidden">
+            <h2 class="text-4xl font-semibold mb-8 text-center">Friends & Their Watchlists</h2>
+            
+            <!-- Friend Requests -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Friend Requests</h3>
+                <div id="friend-requests-container" class="space-y-4">
+                    <!-- Friend requests will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Friends List -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Your Friends</h3>
+                <div id="friends-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Friends will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Friend's Watchlist Modal -->
+            <div id="friend-watchlist-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-gray-800 p-6 rounded-lg w-full max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 id="friend-watchlist-title" class="text-2xl font-bold"></h3>
+                        <button onclick="closeFriendWatchlist()" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div id="friend-watchlist-content" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Friend's watchlist movies will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Users Section -->
+        <section id="search-users-section" class="container mx-auto px-4 hidden">
+            <h2 class="text-4xl font-semibold mb-8 text-center">Find Friends</h2>
+            
+            <!-- Search Input -->
+            <div class="flex justify-center mb-8">
+                <div class="w-full max-w-md relative">
+                    <input type="text" 
+                           id="user-search-input" 
+                           placeholder="Search for users by username..." 
+                           class="w-full p-3 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-purple-500">
+                    <div id="user-search-results" 
+                         class="hidden absolute z-50 w-full bg-gray-800 rounded-lg shadow-lg max-h-96 overflow-y-auto mt-1">
+                        <!-- Search results will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 p-4 text-center mt-8">
+        <p>&copy; 2024 Movie Review Hub</p>
+    </footer>
+
+    <!-- Axios for API Requests -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="watchlist.js"></script>
+</body>
+
+</html>
