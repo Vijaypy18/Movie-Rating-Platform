@@ -4,12 +4,9 @@
   "description": "Movie Rating Website Frontend",
   "main": "index.html",
   "scripts": {
-
     "start": "node server.js",
     "dev": "node server.js",
     "build": "react-scripts build"
-}
-
   },
   "dependencies": {
     "express": "^4.21.2",
