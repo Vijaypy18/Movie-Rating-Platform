@@ -1,5 +1,5 @@
 // Constants for API endpoints and DOM elements
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = 'https://movie-rating-platform.onrender.com';
 const API_ENDPOINTS = {
     LOGIN: `${API_BASE_URL}/auth/login`,
     REGISTER: `${API_BASE_URL}/auth/register`,
